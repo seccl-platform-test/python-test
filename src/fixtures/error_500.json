@@ -1,0 +1,8 @@
+{
+  "error": {
+    "code": "upstream_unavailable",
+    "message": "The upstream market data provider did not respond in time. This is a transient condition; the request is safe to retry.",
+    "retryable": true
+  },
+  "request_id": "req_01HZQ8P2M6TXKD4RA1VBSN0EYH"
+}

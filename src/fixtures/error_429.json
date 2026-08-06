@@ -1,0 +1,10 @@
+{
+  "error": {
+    "code": "rate_limit_exceeded",
+    "message": "Request quota exceeded for this API key. Retry after the interval indicated by the Retry-After header.",
+    "retry_after_seconds": 8,
+    "limit": 120,
+    "window": "1m"
+  },
+  "request_id": "req_01HZQ8N4KP3VYB2MTX9RJC7FDW"
+}
