@@ -16,13 +16,17 @@ A Python service that fetches real-time and historical market data from an exter
 ### System Requirements
 - Python 3.8+
 - MongoDB 4.0+ (for storage operations)
-- Network access to market data API (https://api.market-data.io)
+- Network access to market data API (https://api.example.com)
 
 ### API Requirements
 - Valid API key for market data provider
 - API key must have permissions for:
   - `/price/{ticker}` endpoint
   - `/history/{ticker}` endpoint
+
+The API contract, including a sample response for every endpoint and error code, is documented
+in [`src/fixtures/API_CONTRACT.md`](src/fixtures/API_CONTRACT.md). Neither a live API key nor
+network access is needed to run the test suite — see [Mock API Responses](#mock-api-responses).
 
 ## Installation
 
@@ -124,6 +128,44 @@ prices = ingestion.fetch_historical_prices(
 2 2026-08-03  149.50     950         -1.50       -0.99   NaN         150.25             99.50
 ...
 ```
+
+## Mock API Responses
+
+The test suite never touches the network. Every HTTP call is stubbed with
+`unittest.mock`, and the payloads handed back to those stubs are real recorded response
+bodies kept as JSON under `src/fixtures/`:
+
+| Fixture | Endpoint / status | Contents |
+| --- | --- | --- |
+| `price_AAPL.json` | `GET /price/AAPL` → 200 | Current quote: price `135.95`, volume `84,276,641`, session close of 2026-08-05 |
+| `price_GOOGL.json` | `GET /price/GOOGL` → 200 | Current quote: price `178.42`, volume `21,884,305` |
+| `price_MSFT.json` | `GET /price/MSFT` → 200 | Current quote: price `412.88`, volume `18,402,776` |
+| `history_AAPL.json` | `GET /history/AAPL?days=30` → 200 | 30 daily OHLCV bars, 2026-06-25 → 2026-08-05, oldest first |
+| `error_429.json` | 429 Too Many Requests | Rate-limit envelope, sent with `Retry-After: 8` |
+| `error_500.json` | 500 Internal Server Error | Transient upstream failure, `retryable: true` |
+| `error_404.json` | 404 Not Found | Unknown symbol, `retryable: false` |
+
+Full schemas, field semantics and the request format for each endpoint are in
+[`src/fixtures/API_CONTRACT.md`](src/fixtures/API_CONTRACT.md).
+
+Tests load these through the `load_fixture` helper in `market-data-test.py`, which resolves
+paths relative to the test file:
+
+```python
+quote = load_fixture("price_AAPL.json")
+
+mock_response = Mock()
+mock_response.status_code = 200
+mock_response.json.return_value = quote
+mock_get.return_value = mock_response
+```
+
+The fixtures are internally consistent, so assertions can rely on them: the last bar in
+`history_AAPL.json` has the same `close` and `volume` as the quote in `price_AAPL.json`, since
+both describe the same trading session.
+
+All values are synthetic. The payloads are shaped like a real vendor's, but the prices,
+volumes and request IDs are generated — nothing here is real market data.
 
 ## Running Tests
 
@@ -308,7 +350,7 @@ collection = db["your_collection_name"]
 For issues or questions:
 1. Check the Troubleshooting section above
 2. Review test file for usage examples
-3. Check API documentation at https://api.market-data.io/docs
+3. Check the API contract and sample responses in [`src/fixtures/API_CONTRACT.md`](src/fixtures/API_CONTRACT.md)
 
 ## Version History
 
