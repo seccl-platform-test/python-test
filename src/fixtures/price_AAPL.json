@@ -1,0 +1,15 @@
+{
+  "ticker": "AAPL",
+  "price": 135.95,
+  "currency": "USD",
+  "timestamp": "2026-08-05T20:00:00Z",
+  "volume": 84276641,
+  "open": 133.67,
+  "high": 136.93,
+  "low": 132.6,
+  "previous_close": 133.67,
+  "change": 2.28,
+  "change_percent": 1.71,
+  "market_status": "closed",
+  "source": "consolidated_tape"
+}

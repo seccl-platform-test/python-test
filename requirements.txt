@@ -1,0 +1,7 @@
+# Market Data Ingestion Pipeline - Production Dependencies
+#
+# Core libraries required to run the market data ingestion service
+
+requests==2.31.0
+pandas==2.1.3
+pymongo==4.6.0
