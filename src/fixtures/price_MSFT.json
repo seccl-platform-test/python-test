@@ -1,0 +1,15 @@
+{
+  "ticker": "MSFT",
+  "price": 412.88,
+  "currency": "USD",
+  "timestamp": "2026-08-05T20:00:00Z",
+  "volume": 18402776,
+  "open": 415.63,
+  "high": 416.2,
+  "low": 411.09,
+  "previous_close": 415.63,
+  "change": -2.75,
+  "change_percent": -0.66,
+  "market_status": "closed",
+  "source": "consolidated_tape"
+}

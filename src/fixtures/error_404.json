@@ -1,0 +1,8 @@
+{
+  "error": {
+    "code": "symbol_not_found",
+    "message": "No instrument matches ticker 'AAPLL'.",
+    "retryable": false
+  },
+  "request_id": "req_01HZQ8QG9WFYN3CB5KDTRXM2VA"
+}

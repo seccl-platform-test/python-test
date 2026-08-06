@@ -1,0 +1,15 @@
+{
+  "ticker": "GOOGL",
+  "price": 178.42,
+  "currency": "USD",
+  "timestamp": "2026-08-05T20:00:00Z",
+  "volume": 21884305,
+  "open": 176.05,
+  "high": 179.1,
+  "low": 175.62,
+  "previous_close": 176.05,
+  "change": 2.37,
+  "change_percent": 1.35,
+  "market_status": "closed",
+  "source": "consolidated_tape"
+}
